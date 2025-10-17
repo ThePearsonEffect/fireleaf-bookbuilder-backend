@@ -1,0 +1,37 @@
+@'
+name: 🚀 Firebase Deploy (Optimized)
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_ID: tribelifeinspired-3d888
+
+    steps:
+      - name: 🧭 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🧰 Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 📦 Install Firebase CLI
+        run: npm i -g firebase-tools
+
+      - name: 🔑 Auth with Google (service account)
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
+
+      - name: 📥 Install Functions deps
+        working-directory: functions
+        run: npm ci
+
+      - name: 🚀 Deploy to Firebase
+        run: firebase deploy --project $PROJECT_ID --only functions,hosting --non-interactive
+'@ | Out-File -Encoding UTF8 .github\workflows\firebase-deploy.yml
