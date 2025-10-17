@@ -3,3 +3,11 @@
 *.json
 !firebase.json
 
+# --- Security: never commit secrets ---
+*.key.json
+*service_account*.json
+firebase-adminsdk-*.json
+.github/workflows/*.json
+
+# Do not ignore Firebase config
+!firebase.json

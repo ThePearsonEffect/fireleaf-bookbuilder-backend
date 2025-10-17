@@ -1,5 +1,4 @@
-@'
-name: 🚀 Firebase Deploy (Optimized)
+name: 🚀 Firebase Deploy (Backend)
 
 on:
   push:
@@ -23,15 +22,14 @@ jobs:
       - name: 📦 Install Firebase CLI
         run: npm i -g firebase-tools
 
-      - name: 🔑 Auth with Google (service account)
+      - name: 🔑 Auth with service account
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
+          credentials_json: DarkCyan{{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
 
       - name: 📥 Install Functions deps
         working-directory: functions
         run: npm ci
 
-      - name: 🚀 Deploy to Firebase
-        run: firebase deploy --project $PROJECT_ID --only functions,hosting --non-interactive
-'@ | Out-File -Encoding UTF8 .github\workflows\firebase-deploy.yml
+      - name: 🚀 Deploy Functions
+        run: firebase deploy --project tribelifeinspired-3d888 --only functions --non-interactive
